@@ -55,7 +55,7 @@ def predict_closing_days(df_abertas):
     df_abertas['DIAS_PREVISTOS'] = np.maximum(1, np.round(predicted_days)).astype(int)
     
     # 2. Calcular a Data Provável de Fechamento
-    data_atual = date.today()
+    data_atual = pd.to_datetime(date.today()) # Convertendo para datetime para consistência
     df_abertas['DATA_PROVAVEL_FECHAMENTO'] = df_abertas['DIAS_PREVISTOS'].apply(lambda x: data_atual + timedelta(days=int(x)))
     
     return df_abertas
@@ -112,11 +112,14 @@ if uploaded_file is not None:
                 'FEELING_FECHAMENTO': 'Feeling Humano (%)'
             }, inplace=True)
             
+            # CORREÇÃO: Garantir que a coluna seja do tipo datetime antes de usar .dt
+            display_df['Data Provável Fechamento'] = pd.to_datetime(display_df['Data Provável Fechamento'])
+            
             # Formatação
             display_df['Valor Sugerido'] = display_df['Valor Sugerido'].map('R$ {:,.2f}'.format)
             display_df['Data Provável Fechamento'] = display_df['Data Provável Fechamento'].dt.strftime('%d/%m/%Y')
             
-            # Ordenar pelo campo "Data Provável Fechamento"
+            # Ordenar pelo campo "Data Provável de Fechamento" (usando a coluna formatada como string, o que é aceitável para o display)
             display_df.sort_values(by='Data Provável Fechamento', inplace=True)
             
             st.dataframe(display_df, use_container_width=True)
@@ -125,6 +128,7 @@ if uploaded_file is not None:
             st.header("2. Projeção de Vendas (Valor Sugerido) por Mês")
             
             # Criar a coluna de Mês/Ano para o agrupamento
+            # Usar a coluna original de data (que é datetime) para o agrupamento
             df_results['MES_ANO_PROVAVEL'] = df_results['DATA_PROVAVEL_FECHAMENTO'].dt.to_period('M')
             
             # Agrupar por Mês/Ano e somar o VALOR_SUGERIDO
@@ -176,4 +180,3 @@ st.sidebar.markdown("""
 4. A **Data Provável de Fechamento** é calculada como `Data Atual + Dias Previstos`.
 5. Os resultados serão exibidos no grid e no gráfico de projeção de vendas.
 """)
-
