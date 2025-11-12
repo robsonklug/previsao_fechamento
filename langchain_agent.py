@@ -49,38 +49,56 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
 
     # 3. Criação do Agente Pandas
     # O agente Pandas já vem com a ferramenta de análise de DataFrame
+#    agent = create_pandas_dataframe_agent(
+#        llm=llm,
+#        df=df,
+#        verbose=True,
+#        allow_dangerous_code=True,  # habilita execução de código pandas/py (com cuidado!)
+#        agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
+#        extra_tools=[],
+#        system_message=SYSTEM_PROMPT
+#    )
     agent = create_pandas_dataframe_agent(
         llm=llm,
         df=df,
         verbose=True,
-        allow_dangerous_code=True,  # habilita execução de código pandas/py (com cuidado!)
-        agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
-        extra_tools=[],
+        allow_dangerous_code=True,
+        agent_type="openai-tools",  # Mais eficiente que zero-shot-react
+        max_iterations=15,  # Limite de iterações (padrão é 15, mas seja explícito)
+        max_execution_time=40,  # Timeout em segundos 
+        early_stopping_method="generate",  # Para gracefully quando atingir limite
+        handle_parsing_errors=True,  # Trata erros de parsing sem travar
         system_message=SYSTEM_PROMPT
     )
-    
-#    agent = create_pandas_dataframe_agent(
-#        llm,
-#        df,
-#        verbose=True,
-#        agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
-#        extra_tools=[],
-#        system_message=SYSTEM_PROMPT
-##        memory=memory
-#    )
     
     return agent
 
 # Função para processar a entrada do usuário
-def run_agent(agent, prompt: str):
+
+def run_agent(agent, prompt: str, timeout: int = 60):
     """
-    Executa o agente com o prompt do usuário.
+    Executa o agente com o prompt do usuário com timeout.
     """
     try:
-        response = agent.invoke({"input": prompt})
-        return response["output"]
+        response = agent.invoke(
+            {"input": prompt},
+            config={"max_execution_time": timeout}
+        )
+        return response.get("output", "Desculpa, não consegui gerar uma resposta.")
+    except TimeoutError:
+        return "A análise demorou muito tempo. Tente uma pergunta mais específica."
     except Exception as e:
-        return f"Desculpe, ocorreu um erro ao processar sua solicitação: {e}"
+        return f"Desculpe, ocorreu um erro ao processar sua solicitação: {str(e)}"
+
+#def run_agent(agent, prompt: str):
+#    """
+#    Executa o agente com o prompt do usuário.
+#    """
+#    try:
+#        response = agent.invoke({"input": prompt})
+#        return response["output"]
+#    except Exception as e:
+#        return f"Desculpe, ocorreu um erro ao processar sua solicitação: {e}"
 
 if __name__ == '__main__':
     # Exemplo de uso (apenas para teste local do script)
