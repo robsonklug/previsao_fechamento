@@ -49,25 +49,15 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
 
     # 3. Criação do Agente Pandas
     # O agente Pandas já vem com a ferramenta de análise de DataFrame
-#    agent = create_pandas_dataframe_agent(
-#        llm=llm,
-#        df=df,
-#        verbose=True,
-#        allow_dangerous_code=True,  # habilita execução de código pandas/py (com cuidado!)
-#        agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
-#        extra_tools=[],
-#        system_message=SYSTEM_PROMPT
-#    )
     agent = create_pandas_dataframe_agent(
         llm=llm,
         df=df,
         verbose=True,
         allow_dangerous_code=True,
-        agent_type="openai-tools",  # Mais eficiente que zero-shot-react
-        max_iterations=15,  # Limite de iterações (padrão é 15, mas seja explícito)
-        max_execution_time=40,  # Timeout em segundos 
-        early_stopping_method="generate",  # Para gracefully quando atingir limite
-        handle_parsing_errors=True,  # Trata erros de parsing sem travar
+        agent_type="openai-tools",  # Mais eficiente
+        max_iterations=15,  # Limite de iterações
+        max_execution_time=60,  # Timeout em segundos
+        handle_parsing_errors=True,  # Trata erros gracefully
         system_message=SYSTEM_PROMPT
     )
     
