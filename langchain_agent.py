@@ -51,7 +51,7 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
         verbose=True,
         agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
         extra_tools=[],
-        system_message=SYSTEM_PROMPT,
+        system_message=SYSTEM_PROMPT
 #        memory=memory
     )
     
