@@ -4,7 +4,7 @@ from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe
 from langchain_core.prompts.chat import SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from langchain_core.prompts.chat import ChatPromptTemplate
 #from langchain.memory import ConversationBufferWindowMemory 
-f#rom langchain.memory.buffer_window import ConversationBufferWindowMemory
+#from langchain.memory.buffer_window import ConversationBufferWindowMemory
 from langchain.agents import initialize_agent, AgentType
 
 #from langchain.agents import AgentType
