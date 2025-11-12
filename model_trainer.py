@@ -9,7 +9,7 @@ import joblib
 import numpy as np
 
 # Definindo o caminho do arquivo
-file_path = r"C:\Klug\Python\Projeto_15 - Fechemanto Oportunidade\vendas.xlsx"
+file_path = '/home/ubuntu/upload/vendas(1).xlsx'
 
 # 1. Carregar os dados
 try:
