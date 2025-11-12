@@ -9,3 +9,5 @@ langchain
 langchain-openai
 langchain-experimental
 pandas-datareader
+langchain-community 
+langchain-core
