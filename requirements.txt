@@ -11,3 +11,4 @@ langchain-experimental
 pandas-datareader
 langchain-community 
 langchain-core
+tabulate
