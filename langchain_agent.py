@@ -53,7 +53,10 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
         llm=llm,
         df=df,
         verbose=True,
-        allow_dangerous_code=True  # habilita execução de código pandas/py (com cuidado!)
+        allow_dangerous_code=True,  # habilita execução de código pandas/py (com cuidado!)
+        agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
+        extra_tools=[],
+        system_message=SYSTEM_PROMPT
     )
     
 #    agent = create_pandas_dataframe_agent(
