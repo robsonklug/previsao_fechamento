@@ -223,7 +223,8 @@ with tab_chat:
     else:
         # Cria o agente (ou recria se as configurações mudaram)
         df_chat = st.session_state['df_completo']
-        agent = create_agent(df_chat, openai_api_key, temperature)
+        #agent = create_agent(df_chat, openai_api_key, temperature)
+        agent = create_agent(df_raw, openai_api_key, temperature)
 
         # Exibe mensagens anteriores
         for message in st.session_state.messages:
