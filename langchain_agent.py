@@ -5,9 +5,8 @@ from langchain_core.prompts.chat import SystemMessagePromptTemplate, HumanMessag
 from langchain_core.prompts.chat import ChatPromptTemplate
 #from langchain.memory import ConversationBufferWindowMemory 
 #from langchain.memory.buffer_window import ConversationBufferWindowMemory
-from langchain.agents import initialize_agent, AgentType
+from langchain.agents import initialize_agent
 
-#from langchain.agents import AgentType
 from langchain_openai import ChatOpenAI
 
 
@@ -54,7 +53,7 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
         llm,
         df,
         verbose=True,
-        agent_type=AgentType.OPENAI_FUNCTIONS,
+        agent_type="zero-shot-react-description"  #agent_type=AgentType.OPENAI_FUNCTIONS,
         extra_tools=[],
         system_message=SYSTEM_PROMPT,
         memory=memory
