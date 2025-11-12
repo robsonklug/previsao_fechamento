@@ -5,7 +5,7 @@ streamlit
 joblib
 numpy
 plotly
-langchain
+langchain==0.1.16
 langchain-openai
 langchain-experimental
 pandas-datareader
