@@ -4,7 +4,7 @@ import joblib
 from datetime import date, timedelta
 import numpy as np
 import plotly.express as px
-from langchain_experimental.agents import create_agent, run_agent # Importando as funções do agente
+from langchain_agent import create_agent, run_agent # Importando as funções do agente
 
 # --- Configurações Iniciais ---
 st.set_page_config(layout="wide", page_title="Previsão de Fechamento de Oportunidades")
