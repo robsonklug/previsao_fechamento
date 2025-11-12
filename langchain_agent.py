@@ -3,15 +3,9 @@ import pandas as pd
 from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 from langchain_core.prompts.chat import SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from langchain_core.prompts.chat import ChatPromptTemplate
-#from langchain.memory import ConversationBufferWindowMemory 
 from langchain.memory.buffer_window import ConversationBufferWindowMemory
 from langchain.agents import initialize_agent
-
 from langchain_openai import ChatOpenAI
-
-
-
-
 
 
 # Prompt de sistema customizado
