@@ -6,7 +6,7 @@ from langchain_core.prompts.chat import ChatPromptTemplate
 #from langchain.memory.buffer_window import ConversationBufferWindowMemory
 #from langchain_community.memory import ConversationBufferWindowMemory
 #from langchain.agents import initialize_agent
-from langchain.agents import create_react_agent
+#from langchain.agents import create_react_agent
 from langchain_openai import ChatOpenAI
 
 
