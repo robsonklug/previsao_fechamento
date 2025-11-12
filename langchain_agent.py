@@ -1,6 +1,7 @@
 import pandas as pd
 
 from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
+
 from langchain_core.prompts.chat import SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from langchain_core.prompts.chat import ChatPromptTemplate
 #from langchain.memory.buffer_window import ConversationBufferWindowMemory
@@ -30,7 +31,7 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
 
     # 1. Configuração do LLM
     llm = ChatOpenAI(
-        model="gpt-4.1-mini", # Modelo sugerido para tarefas de raciocínio e custo-benefício
+        model="gpt-4o-mini", # Modelo sugerido para tarefas de raciocínio e custo-benefício
         temperature=temperature,
         openai_api_key=openai_api_key
     )
@@ -46,14 +47,21 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
     # 3. Criação do Agente Pandas
     # O agente Pandas já vem com a ferramenta de análise de DataFrame
     agent = create_pandas_dataframe_agent(
-        llm,
-        df,
+        llm=llm,
+        df=df,
         verbose=True,
-        agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
-        extra_tools=[],
-        system_message=SYSTEM_PROMPT
-#        memory=memory
+        allow_dangerous_code=True  # habilita execução de código pandas/py (com cuidado!)
     )
+    
+#    agent = create_pandas_dataframe_agent(
+#        llm,
+#        df,
+#        verbose=True,
+#        agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
+#        extra_tools=[],
+#        system_message=SYSTEM_PROMPT
+##        memory=memory
+#    )
     
     return agent
 
