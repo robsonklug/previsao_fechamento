@@ -4,7 +4,7 @@ from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe
 from langchain_core.prompts.chat import SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from langchain_core.prompts.chat import ChatPromptTemplate
 #from langchain.memory.buffer_window import ConversationBufferWindowMemory
-from langchain_community.memory import ConversationBufferWindowMemory
+#from langchain_community.memory import ConversationBufferWindowMemory
 from langchain.agents import initialize_agent
 from langchain_openai import ChatOpenAI
 
@@ -34,13 +34,13 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
         openai_api_key=openai_api_key
     )
 
-    # 2. Configuração da Memória
-    # Usaremos uma memória de buffer de janela para manter o contexto das últimas 5 interações
-    memory = ConversationBufferWindowMemory(
-        k=5,
-        memory_key="chat_history",
-        return_messages=True
-    )
+#    # 2. Configuração da Memória
+#    # Usaremos uma memória de buffer de janela para manter o contexto das últimas 5 interações
+#    memory = ConversationBufferWindowMemory(
+#        k=5,
+#        memory_key="chat_history",
+#        return_messages=True
+#    )
 
     # 3. Criação do Agente Pandas
     # O agente Pandas já vem com a ferramenta de análise de DataFrame
@@ -51,7 +51,7 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
         agent_type="zero-shot-react-description",  #agent_type=AgentType.OPENAI_FUNCTIONS,
         extra_tools=[],
         system_message=SYSTEM_PROMPT,
-        memory=memory
+#        memory=memory
     )
     
     return agent
