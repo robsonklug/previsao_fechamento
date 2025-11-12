@@ -29,6 +29,9 @@ def create_agent(df: pd.DataFrame, openai_api_key: str, temperature: float):
     if not openai_api_key:
         return None
 
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("O parâmetro 'df' deve ser um pandas.DataFrame.")
+    
     # 1. Configuração do LLM
     llm = ChatOpenAI(
         model="gpt-4o-mini", # Modelo sugerido para tarefas de raciocínio e custo-benefício
