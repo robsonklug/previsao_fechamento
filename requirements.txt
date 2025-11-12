@@ -8,5 +8,5 @@ plotly
 langchain
 langchain-openai
 langchain-experimental
-langchain.memory
+langchain-memory
 pandas-datareader
