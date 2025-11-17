@@ -196,9 +196,25 @@ preprocessor = ColumnTransformer(
 )
 
 # 7. Criação do Pipeline: Pré-processamento + Modelo
+    #Abaixo estão os parâmetros mais importantes para deixar o modelo mais forte:
+    #a) n_estimators (quantidade de árvores)
+    #   Aumentar → melhora a previsão, mas deixa mais lento. Valor recomendado para testar: 200, 300, 500
+    #b) learning_rate (passo de aprendizado)
+    #   Muito alto → overfitting
+    #   Muito baixo → modelo lento para aprender, mas mais preciso. Recomendado testar: 0.05, 0.02, 0.01
+    #c) max_depth (profundidade das árvores)
+    #   Controla a capacidade de aprender padrões.
+    #   Profundidades menores reduzem overfitting. Testar: 3, 4, 5
+    #d) min_samples_split e min_samples_leaf
+    #   Controlam o mínimo de dados por divisão/folha.
+    #   Ajudam muito contra overfitting.
+    #
+    # Overfitting é quando o modelo “decorou” os dados de treino em vez de aprender o padrão real. 
+    # Ele fica ótimo no treino, mas vai mal em dados novos porque não generaliza.
+
 model = Pipeline(steps=[
     ('preprocessor', preprocessor),
-    ('regressor', GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, max_depth=3, random_state=42))
+    ('regressor', GradientBoostingRegressor(n_estimators=300, learning_rate=0.05, max_depth=4, random_state=42))
 ])
 
 # 8. Treinamento do modelo (usando todos os dados disponíveis para um modelo final)
@@ -219,3 +235,4 @@ joblib.dump(model, 'modelo_fechamento.pkl')
 joblib.dump(existing_features, 'features_list.pkl')
 
 print("\nModelo e artefatos salvos: 'modelo_fechamento.pkl' e 'features_list.pkl'.")
+
