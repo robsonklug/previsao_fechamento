@@ -20,6 +20,19 @@ ENRICHMENT_COLUMNS = [
 ]
 CNPJ_COLUMN = 'CNPJ'
 
+# Porte da empresa
+# 01 MICROEMPRESA - Empresa com Receita Bruta Anual de até R$ 360.000,00 
+# 03 EMPRESA DE PEQUENO PORTE -	Empresa com Receita Bruta Anual superior a R$ 360.000,00 e igual ou inferior a R$ 4.800.000,00 
+# 05 DEMAIS - Empresas que não se enquadram como ME ou EPP. Este código inclui as empresas de Médio e Grande Porte e outras entidades
+# 00 NÃO INFORMADO - Utilizado em casos de inconsistência ou quando a informação não foi reportada.
+
+# Situação Cadastral (descrição dos códigos)
+# 02 ATIVA - A empresa está regular perante a Receita Federal.
+# 03 SUSPENSA - O cadastro da empresa está temporariamente paralisado.
+# 04 INAPTA - A empresa possui pendências graves, como falta de entrega de declarações por dois anos consecutivos.
+# 08 BAIXADA - A empresa foi extinta ou encerrada definitivamente.
+# 01 NULA - A inscrição do CNPJ foi invalidada por motivo de fraude ou vício
+
 # --- Funções de Enriquecimento ---
 
 def clean_cnpj(cnpj):
@@ -235,4 +248,5 @@ joblib.dump(model, 'modelo_fechamento.pkl')
 joblib.dump(existing_features, 'features_list.pkl')
 
 print("\nModelo e artefatos salvos: 'modelo_fechamento.pkl' e 'features_list.pkl'.")
+
 
